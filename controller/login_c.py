@@ -64,6 +64,7 @@ def admin():
 
 @login_c.route('/set_cookie')
 def set_cookie():
+    nome = session.get('name')
     response = make_response('os cookies foram pegos')
-    response.set_cookie('name', 'nome', max_age= 60*60*24)
+    response.set_cookie('name', nome , max_age= 60*60*24)
     return response
