@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de usuário</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Cadastro de Usuário</h2>
+        <form method="POST" action="{{ url_for('register') }}">
+            <label for="name">Nome</label>
+            <input type="text" id="name" name="name" value="{{ request.form['name'] }}"  required minlength="3">
+            {% if errors.name %} <span class="error">{{ errors.name }}</span> {% endif %}
+
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" value="{{ request.form['email'] }}" required>
+            {% if errors.email %}<span class="error">{{ errors.email }}</span>{% endif %}
+
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required minlength="8" maxlength="12">
+            {% if errors.password %}<span class="error">{{ errors.password }}</span>{% endif %}
+
+            <label for="confirm_password">Confirmação de Senha:</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
+            {% if errors.confirm_password %}<span class="error">{{ errors.confirm_password }}</span>{% endif %}
+
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+
+</body>
+</html>
+
