@@ -20,7 +20,7 @@ def login():
                 print('oi')
                 flash('login realizado com sucesso', 'success')
                 return redirect(url_for('login.dash'))
-    print('sla')
+            
     return render_template('login.html')
     
 @login_c.route('/verifica', methods=['GET','POST'])
@@ -43,7 +43,7 @@ def mid():
     print(3)
     if 'iduser' not in session: #verifica se o user ta na sessão
         return redirect(url_for('login.inicial'))
-    print('9')
+    print(9)
     return#retornar flash mensagem ou pagina de erro (acesso não autorizado, tente fazer login)
 
 ROTAS_PUBLCAS=['login.inicial', 'login.login'] 
@@ -67,4 +67,18 @@ def set_cookie():
     nome = session.get('name')
     response = make_response('os cookies foram pegos')
     response.set_cookie('name', nome , max_age= 60*60*24)
-    return response
+    return redirect(url_for('login.inicial'))
+
+@login_c.route('/get_cookie')
+def get_cookie():
+    username = request.cookie.get('name')
+    if username:
+        return f' olá {username}'
+    else:
+        return 'nenhum cookie encontrado' 
+
+@login_c.route('/delete_cookie')
+def delete_cookie():
+    resp = make_response('cookie deletado')
+    resp.set_cookie('name', '', expires=0)
+    return redirect(url_for('login.dash'))
